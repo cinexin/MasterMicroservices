@@ -29,4 +29,7 @@ class UserMockRepository {
         return users.firstOrNull { user -> user.id == id }
     }
 
+    fun delete(user: User) {
+        users.remove(user)
+    }
 }

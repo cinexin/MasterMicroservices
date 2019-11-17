@@ -1,6 +1,7 @@
 package org.microservices.master.restfulwebservices.service.impl
 
 import org.microservices.master.restfulwebservices.domain.User
+import org.microservices.master.restfulwebservices.exceptions.UserNotFoundException
 import org.microservices.master.restfulwebservices.repository.UserMockRepository
 import org.microservices.master.restfulwebservices.service.UserService
 import org.springframework.stereotype.Service
@@ -9,6 +10,11 @@ import org.springframework.stereotype.Service
 class UserServiceImpl(
         private val userMockRepository: UserMockRepository
 ): UserService {
+    override fun deleteUserById(userId: Int) {
+        val userToDelete = getUserById(userId) ?: throw UserNotFoundException(userId)
+        userMockRepository.delete(userToDelete)
+    }
+
     override fun createUser(user: User): User {
         return userMockRepository.save(user)
     }
