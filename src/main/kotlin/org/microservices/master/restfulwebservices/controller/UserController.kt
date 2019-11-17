@@ -6,6 +6,7 @@ import org.microservices.master.restfulwebservices.service.UserService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
+import javax.validation.Valid
 
 @RestController
 @RequestMapping("users")
@@ -24,7 +25,7 @@ class UserController(
     }
 
     @PostMapping("")
-    fun createUser(@RequestBody user: User): ResponseEntity<User> {
+    fun createUser(@Valid @RequestBody user: User): ResponseEntity<User> {
         val savedUser =  userService.createUser(user)
 
         val newUserUri = ServletUriComponentsBuilder
