@@ -20,7 +20,8 @@ class BaseExceptionHandler: ResponseEntityExceptionHandler() {
 
     @ExceptionHandler(value=[Exception::class])
     fun basicExceptionHandler(ex: Exception): ResponseEntity<ExceptionResponse> {
-        val exceptionResponse = ExceptionResponse(ZonedDateTime.now(), ex.message ?: "no message", ex.localizedMessage)
+        ex.printStackTrace()
+        val exceptionResponse = ExceptionResponse(ZonedDateTime.now(), ex.message ?: "no message", ex.localizedMessage ?: "")
         return ResponseEntity(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR)
     }
 

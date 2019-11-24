@@ -3,6 +3,8 @@ package org.microservices.master.restfulwebservices.controller
 import org.microservices.master.restfulwebservices.domain.User
 import org.microservices.master.restfulwebservices.exceptions.UserNotFoundException
 import org.microservices.master.restfulwebservices.service.UserService
+import org.springframework.hateoas.EntityModel
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
@@ -20,8 +22,15 @@ class UserController(
     }
 
     @GetMapping("/{id}")
-    fun getUserById(@PathVariable("id") id: Int): User {
-        return userService.getUserById(id) ?: throw UserNotFoundException(id)
+    fun getUserById(@PathVariable("id") id: Int): EntityModel<User> {
+        val user = userService.getUserById(id) ?: throw UserNotFoundException(id)
+
+        // HATEOAS
+        val model = EntityModel(user)
+        val linkTo = linkTo(methodOn(this::class.java).getAllUsers())
+        model.add(linkTo.withRel("all-users"))
+
+        return model
     }
 
     @PostMapping("")
