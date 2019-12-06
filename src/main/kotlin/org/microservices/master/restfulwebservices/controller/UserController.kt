@@ -4,7 +4,8 @@ import org.microservices.master.restfulwebservices.domain.User
 import org.microservices.master.restfulwebservices.exceptions.UserNotFoundException
 import org.microservices.master.restfulwebservices.service.UserService
 import org.springframework.hateoas.EntityModel
-import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
