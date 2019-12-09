@@ -5,6 +5,9 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider
 import org.springframework.http.converter.json.MappingJacksonValue
 
+/**
+ * This class helps us to understand fields filtering in WS responses
+ */
 @JsonFilter("UserDynaFilter")
 data class UserWithFilters(
         val id: String,
