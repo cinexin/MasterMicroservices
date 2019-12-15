@@ -1,7 +1,9 @@
 package org.microservices.master.restfulwebservices.controller
 
+import org.microservices.master.restfulwebservices.domain.Post
 import org.microservices.master.restfulwebservices.domain.User
 import org.microservices.master.restfulwebservices.domain.enums.UserServiceMode
+import org.microservices.master.restfulwebservices.domain.input.NewPostForm
 import org.microservices.master.restfulwebservices.exceptions.UserNotFoundException
 import org.microservices.master.restfulwebservices.service.UserServiceFactory
 import org.springframework.hateoas.mvc.ControllerLinkBuilder
@@ -46,5 +48,25 @@ class UserJPAController(UserServiceFactory: UserServiceFactory) {
     fun deleteUserById(@PathVariable("id") userId: Int): ResponseEntity<Any> {
         userService.deleteUserById(userId)
         return ResponseEntity.noContent().build()
+    }
+
+    @GetMapping("{id}/posts")
+    fun getAllPostsOfUser(@PathVariable("id") id: Int): List<Post> {
+        return userService.getUserById(id)?.posts ?: throw UserNotFoundException(id)
+    }
+
+    @PostMapping("{id}/posts")
+    fun newPostForUser(@PathVariable("id") id: Int,
+                       @RequestBody @Valid newPostForm: NewPostForm): ResponseEntity<Post> {
+
+        val newPost = userService.newPost(id, newPostForm)
+
+        val location = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(newPost.id)
+                .toUri()
+
+        return ResponseEntity.created(location).body(newPost)
     }
 }

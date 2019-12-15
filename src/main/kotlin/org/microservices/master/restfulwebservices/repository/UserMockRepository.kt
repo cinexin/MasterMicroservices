@@ -20,7 +20,7 @@ class UserMockRepository {
     }
 
     fun save(user: User): User {
-        user.id = user.id ?: users.count() + 1
+        user.id = user.id
         users.add(user)
         return user
     }

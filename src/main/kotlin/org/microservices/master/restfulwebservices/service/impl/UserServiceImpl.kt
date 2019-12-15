@@ -1,6 +1,8 @@
 package org.microservices.master.restfulwebservices.service.impl
 
+import org.microservices.master.restfulwebservices.domain.Post
 import org.microservices.master.restfulwebservices.domain.User
+import org.microservices.master.restfulwebservices.domain.input.NewPostForm
 import org.microservices.master.restfulwebservices.exceptions.UserNotFoundException
 import org.microservices.master.restfulwebservices.repository.UserMockRepository
 import org.microservices.master.restfulwebservices.service.UserService
@@ -13,6 +15,10 @@ class UserServiceImpl(
     override fun deleteUserById(userId: Int) {
         val userToDelete = getUserById(userId) ?: throw UserNotFoundException(userId)
         userMockRepository.delete(userToDelete)
+    }
+
+    override fun newPost(userId: Int, newPostForm: NewPostForm): Post {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun createUser(user: User): User {
